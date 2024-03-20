@@ -68,7 +68,7 @@ export const PROMPT_TEMPLATE: ITemplate = {
         format: pvAttr(null, "Selecciona formato:", "[Selecciona formato]", FORMATS, null),
         example: pvAttr(null, "Ejemplo:", "[Escribe ejemplo de respuesta]", null, null)
     },
-    sourceTemplate: "[Eres un $ROLE, <br>][necesito $NEEDS, <br>][en el proceso, deberías $DETAILS, <br>][por favor $EXCLUSION, <br>][ingresa el resultado final en $FORMAT, <br>][aquí hay un ejemplo: $EXAMPLE]",
+    sourceTemplate: "[Eres un $ROLE, <br>][necesito $NEEDS, <br>][en el proceso deberías $DETAILS, <br>][por favor $EXCLUSION, <br>][ingresa el resultado final en $FORMAT, <br>][aquí hay un ejemplo: $EXAMPLE]",
     template: [
         ["Eres un ", pv("role"), ",", "<br/>"],
         ["necesito ", pv("needs"), ", ", "<br/>"],

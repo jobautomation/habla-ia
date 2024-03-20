@@ -26,18 +26,6 @@ function PipeSeparator() {
  * Manage Examples
  */
 
-function ExampleNameModalBody() {
-  let exampleName = state.useNewExampleName();
-  let setValue = state.useSetNewExampleName();
-  return (
-    <div>
-      <div><strong>Enter a name for the example:</strong></div>
-      <div style={{userSelect: "none"}}>
-        <input type = "text" style={{width: "100%"}} value={exampleName} onChange={ (e) => setValue(e.target.value)}/>
-      </div>
-    </div>
-  );
-}
 
 function ExamplesList() {
   let loadExample = useSetAtom(events.loadExampleAtom);
@@ -55,101 +43,22 @@ function ExamplesList() {
   );
 }
 
-function SetAsExample() {
-  let setModal = useSetAtom(useModal());
-  let createExample = useSetAtom(events.createExampleAtom);
-
-  const createExampleModal = () => {
-    setModal({ title: "Crear Ejemplo",
-               body: <ExampleNameModalBody/>,
-               footerButtons: [["Crear", { className: "primary", onClick: () => createExample()}],
-                               ["Cancelar", {}]]}) 
-  }
-  
-  return (
-    <Fragment>
-      <a onClick = { createExampleModal }>
-        <icons.Plus/> {" Set As Example"}
-      </a>
-      <PipeSeparator/>
-    </Fragment> 
-  );  
-}
-
-function UpdateExample() {
-  let loadedExampleId = subs.useLoadedExampleId();
-  let isExampleModified = subs.useIsExampleModified();
-  let updateExample = useSetAtom(events.updateExampleAtom);
-
-  return (
-    isExampleModified ?
-      <Fragment>
-        <a onClick={ () => updateExample(loadedExampleId) }><icons.EditIcon/> {" Update Example"}</a>
-        <PipeSeparator/>
-      </Fragment>
-      : null
-  );  
-}
 
 function ClearExample() {
   let loadExample = useSetAtom(events.loadExampleAtom);
   return (
-    <a onClick = {() => loadExample(null)}><icons.CloseCircleIcon /> {" Clear"}</a> 
-  );  
-}
-
-function DeleteExampleModalBody() {
-  let exampleName = subs.useLoadedExampleName();
-  return (
-    <div>
-      <strong>
-        <div style={{color: "#777777"}}>Estás seguro de borrar el ejemplo?</div>
-        <div style={{color: "#333333"}}>{exampleName}</div>
-      </strong>
-    </div>
-  );
-}
-
-function DeleteExample() {
-  let loadedExampleId = subs.useLoadedExampleId();
-  let deleteExample = useSetAtom(events.deleteExampleAtom);
-  let setModal = useSetAtom(useModal());
-
-  let deleteExampleModal = () => {
-    setModal({title: "Borrar Ejemplo",
-              body: <DeleteExampleModalBody/>,
-              footerButtons: [["Borrar", { className: "primary", onClick: deleteExample}],
-                              ["Cancelar", {}]]})  
-  }
-  
-  return (
-    loadedExampleId ? 
-      <Fragment>
-        <PipeSeparator/>
-        <a className="red" onClick = {deleteExampleModal}>
-          <icons.DeleteRedIcon /> {" Borrar Ejemplo"}
-        </a> 
-      </Fragment>
-      : null
-    
+    <a onClick = {() => loadExample(null)}><icons.CloseCircleIcon /> {" Volver a Empezar"}</a> 
   );  
 }
 
 function BuildPromptMenu() {
-  let loadedExampleId = subs.useLoadedExampleId();
-  let valuesEmpty = subs.useCurrentValuesEmpty();
   
   return (
     <span style={{fontSize: 12}}>
       {" [ "}
       <ExamplesList /> 
       <PipeSeparator/>
-      { !valuesEmpty ?
-          !loadedExampleId ? <SetAsExample/> : <UpdateExample/>
-          : null
-      }
       <ClearExample />
-      <DeleteExample />
       {" ] "}
     </span>
   );
@@ -208,9 +117,10 @@ function App() {
   return (
     <div className="App">
       <div className="container">
+        <h1>Constructor de Prompts: </h1>
         <h2>Crea un Prompt: <BuildPromptMenu/></h2>
         <PromptBuilder promptTemplate={template}/>
-        <h2>Prompt: <CurrentPromptMenu /></h2>
+        <h2>Resultado: <CurrentPromptMenu /></h2>
         <CompletePrompt />
       </div>
       <TemplateBuilder onSubmit = { setTemplate }/>
