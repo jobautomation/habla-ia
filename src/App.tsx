@@ -117,10 +117,11 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <h1>Constructor de Prompts: </h1>
-        <h2>Crea un Prompt: <BuildPromptMenu/></h2>
+        <h1>Constructor de Prompts </h1>
+        <h2>ChatGPT + Claude + Llama</h2>
+        <h3>Opciones: <BuildPromptMenu/></h3>
         <PromptBuilder promptTemplate={template}/>
-        <h2>Resultado: <CurrentPromptMenu /></h2>
+        <h3>Resultado: <CurrentPromptMenu /></h3>
         <CompletePrompt />
       </div>
       <TemplateBuilder onSubmit = { setTemplate }/>
